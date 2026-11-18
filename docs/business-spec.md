@@ -23,11 +23,11 @@ Wireframes are designed in Figma: [Hospital Portal Wireframes](https://www.figma
 
 | Component | Value shown | Source |
 |---|---|---|
-| Page heading | Hospital name | `hospital_tbl.hospital_name` |
-| Hospital name | Text | `hospital_tbl.hospital_name` |
-| Hospital address | Text | `hospital_tbl.address` |
-| Owner of hospital | Text | `hospital_tbl.owner_name` |
-| Number of in-patients | Whole number | `hospital_tbl.inpatient_count` |
+| Page heading | Hospital name | `hospital_info_tbl.hospital_name` |
+| Hospital name | Text | `hospital_info_tbl.hospital_name` |
+| Hospital address | Text | `hospital_info_tbl.address` |
+| Owner of hospital | Text | `hospital_info_tbl.owner_name` |
+| Number of in-patients | Whole number | `hospital_info_tbl.inpatient_count` |
 | Patients Info button | Opens page P2 | — |
 
 **API:** `GET /api/hospital`
@@ -40,11 +40,11 @@ Wireframes are designed in Figma: [Hospital Portal Wireframes](https://www.figma
 
 | Component | Value shown | Source |
 |---|---|---|
-| Patient name | Text | `inpatients_tbl.patient_name` |
-| Patient card number | Unique text | `inpatients_tbl.card_number` |
-| Admission date | Date, `DD MMM YYYY` | `inpatients_tbl.admission_date` |
-| Current bill amount | Amount with 2 decimals | `inpatients_tbl.current_bill_amount` |
-| Disease name | Text | `inpatients_tbl.disease_name` |
+| Patient name | Text | `inpatients_info_tbl.patient_name` |
+| Patient card number | Unique text | `inpatients_info_tbl.card_number` |
+| Admission date | Date, `DD MMM YYYY` | `inpatients_info_tbl.admission_date` |
+| Current bill amount | Amount with 2 decimals | `inpatients_info_tbl.current_bill_amount` |
+| Disease name | Text | `inpatients_info_tbl.disease_name` |
 | Back to Home button | Opens page P1 | — |
 
 Rows are sorted by admission date, newest first. If there are no records the page shows "No in-patients found".
@@ -89,15 +89,15 @@ Both APIs are read-only and return JSON.
 
 ```mermaid
 erDiagram
-  hospital_tbl ||--o{ inpatients_tbl : "has"
-  hospital_tbl {
+  hospital_info_tbl ||--o{ inpatients_info_tbl : "has"
+  hospital_info_tbl {
     integer hospital_id PK
     text hospital_name
     text address
     text owner_name
     integer inpatient_count
   }
-  inpatients_tbl {
+  inpatients_info_tbl {
     integer inpatient_id PK
     integer hospital_id FK
     text patient_name
@@ -110,7 +110,7 @@ erDiagram
 
 One hospital has many in-patients. Each in-patient row points to its hospital through `hospital_id`.
 
-### `hospital_tbl` — one row
+### `hospital_info_tbl` — one row
 
 | Column | Data type | Constraints |
 |---|---|---|
@@ -120,12 +120,12 @@ One hospital has many in-patients. Each in-patient row points to its hospital th
 | owner_name | text | Not null |
 | inpatient_count | integer | Not null, ≥ 0 |
 
-### `inpatients_tbl` — one row per in-patient
+### `inpatients_info_tbl` — one row per in-patient
 
 | Column | Data type | Constraints |
 |---|---|---|
 | inpatient_id | integer | Primary key, auto-generated |
-| hospital_id | integer | Not null, foreign key → `hospital_tbl.hospital_id` |
+| hospital_id | integer | Not null, foreign key → `hospital_info_tbl.hospital_id` |
 | patient_name | text | Not null |
 | card_number | text | Not null, unique |
 | admission_date | date | Not null |
@@ -134,4 +134,4 @@ One hospital has many in-patients. Each in-patient row points to its hospital th
 
 ### Seed data
 
-A seed script inserts one `hospital_tbl` row and six synthetic `inpatients_tbl` rows linked to it. `inpatient_count` is set to the number of seeded in-patient rows.
+A seed script inserts one `hospital_info_tbl` row and six synthetic `inpatients_info_tbl` rows linked to it. `inpatient_count` is set to the number of seeded in-patient rows.
