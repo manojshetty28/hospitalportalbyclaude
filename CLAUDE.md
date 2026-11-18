@@ -18,3 +18,12 @@
 
 - Whenever the repo owner states a rule or standing preference for this project, record it in this file.
 - Changes to this file follow the Git flow above: feature branch, then PR, merged by the repo owner.
+
+## Architecture (standing rule from the repo owner, 2026-11-18)
+
+- Frontend: React, in its own folder `frontend/`.
+- Backend: Java, in its own folder `backend/`.
+- Database: Supabase, used as a SQL (Postgres) database.
+- Hosting: Vercel, with the React frontend and the Java backend as separate frontend and backend targets.
+- The backend connects to the Supabase database using four config values: username, password, DB URL and DB name.
+- Those config values are supplied as environment variables on the backend target and are never committed to the repo. (Claude's addition, pending owner confirmation.)
