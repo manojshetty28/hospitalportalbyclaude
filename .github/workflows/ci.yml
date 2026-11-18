@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: portal
+          POSTGRES_PASSWORD: portal_ci_pw
+          POSTGRES_DB: hospital_portal
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U portal -d hospital_portal"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DB_USER: portal
+      DB_PASSWORD: portal_ci_pw
+      DB_URL: localhost:5432
+      DB_NAME: hospital_portal
+      DB_SSL: disable
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history for SonarQube Cloud
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Unit tests with coverage
+        run: npm run test:coverage
+
+      - name: SonarQube Cloud scan
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Create tables and insert dummy data
+        env:
+          PGPASSWORD: portal_ci_pw
+        run: |
+          psql -h localhost -U portal -d hospital_portal -v ON_ERROR_STOP=1 \
+            -f db/001-create-tables.sql -f db/002-insert-dummy-data.sql
+
+      - name: Install browser for end-to-end tests
+        run: npm run e2e:install
+
+      - name: End-to-end tests
+        run: npm run e2e
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          if-no-files-found: ignore
