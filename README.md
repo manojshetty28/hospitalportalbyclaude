@@ -11,11 +11,11 @@ A learning app with two read-only pages (Home and In-patients), built as one Nex
 
 ## Checks
 
-| Command | What it does |
-|---|---|
-| `npm run lint` | ESLint |
-| `npm run format:check` | Prettier |
-| `npm run typecheck` | TypeScript |
-| `npm run test:coverage` | Unit tests with 100% coverage threshold |
-| `npm run build` | Production build |
-| `npm run e2e` | Playwright end-to-end tests (needs the database and a build) |
+| Command                 | What it does                                                 |
+| ----------------------- | ------------------------------------------------------------ |
+| `npm run lint`          | ESLint                                                       |
+| `npm run format:check`  | Prettier                                                     |
+| `npm run typecheck`     | TypeScript                                                   |
+| `npm run test:coverage` | Unit tests with 100% coverage threshold                      |
+| `npm run build`         | Production build                                             |
+| `npm run e2e`           | Playwright end-to-end tests (needs the database and a build) |
