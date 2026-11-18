@@ -20,6 +20,7 @@ describe("getDb", () => {
     vi.stubEnv("DB_PASSWORD", "secret");
     vi.stubEnv("DB_URL", "db.example.com:6543");
     vi.stubEnv("DB_NAME", "postgres");
+    vi.stubEnv("DB_SSL", "");
   });
 
   afterEach(() => {
