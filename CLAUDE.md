@@ -3,7 +3,7 @@
 ## Git flow (standing rule from the repo owner, 2026-11-18)
 
 - Never commit directly to `main`.
-- For every piece of work, create a new branch first:
+- Every piece of work starts with a GitHub issue, then a new branch named after it:
   - `feature/<github_issue_id>/<short_description_of_github_issue>` for new features, specs and docs (for example `feature/12/patient-registration`)
   - `bugfix/<short-name>` for bug fixes
 - Push the branch and open a pull request against `main`.
@@ -23,16 +23,16 @@
 
 - This is a learning app only, not a system for real hospital use.
 - Use free plans only: Vercel Hobby and Supabase free tier.
-- Never use real patient data; all data is synthetic. (Claude's addition, pending owner confirmation.)
+- Never use real patient data; all data is synthetic.
 
 ## Architecture (standing rule from the repo owner, 2026-11-18)
 
 - One Next.js app covers both the React UI and the backend API. There is no separate Java or standalone backend.
-- The app lives at the repo root, with backend logic kept in its own folder inside the app. (Location is Claude's choice, pending owner confirmation.)
+- The app lives at the repo root, with backend logic kept in its own folder inside the app.
 - Database: Supabase, used as a SQL (Postgres) database.
 - Hosting: one Vercel project.
 - Server-side code connects to the Supabase database using four config values: username, password, DB URL and DB name.
-- Those config values are supplied as environment variables and are never committed to the repo. (Claude's addition, pending owner confirmation.)
+- Those config values are supplied as environment variables and are never committed to the repo.
 
 ## UI designs (standing rule from the repo owner, 2026-11-18)
 
@@ -41,7 +41,7 @@
 
 ## Naming conventions (standing rule from the repo owner, 2026-11-18)
 
-The owner requires standard, consistent naming for every object. The table names are the owner's; the rest are Claude's choices of common industry conventions, pending owner confirmation.
+The owner requires standard, consistent naming for every object. These conventions were confirmed by the owner on 2026-11-18.
 
 | Object | Convention | Example |
 |---|---|---|
