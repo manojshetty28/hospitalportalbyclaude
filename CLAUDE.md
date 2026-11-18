@@ -13,6 +13,7 @@
 
 - Do not start implementation work until the repo owner explicitly approves it.
 - Until then, only spec writing, docs and planning are in scope.
+- Approved so far (2026-11-18): the app code (frontend, backend APIs) and the SQL scripts. Not approved: anything in Vercel or Supabase.
 
 ## Keeping this file current (standing rule from the repo owner, 2026-11-18)
 
@@ -32,7 +33,8 @@
 - Database: Supabase, used as a SQL (Postgres) database.
 - Hosting: one Vercel project.
 - Server-side code connects to the Supabase database using four config values: username, password, DB URL and DB name.
-- Those config values are supplied as environment variables and are never committed to the repo.
+- Those config values are the environment variables `DB_USER`, `DB_PASSWORD`, `DB_URL` (host:port) and `DB_NAME`, and are never committed to the repo. `DB_SSL=disable` is allowed only for a local or CI database; Supabase connections always use TLS.
+- Pages follow the Next.js Cache Components model: a static shell, with database content read on every request inside `<Suspense>`. Pages and APIs share one service layer in `src/server/`.
 
 ## UI designs (standing rule from the repo owner, 2026-11-18)
 
@@ -69,7 +71,7 @@ Names are descriptive English words with no unexplained abbreviations.
 
 Follow current rules and best practices for the SQL database, UI screen design, React and Next.js. Check the official documentation for the installed versions rather than relying on older habits. The detailed checklists are in `docs/technical-solution.md`; the essentials are:
 
-- **SQL database:** primary and foreign keys on every table; not-null, unique and check constraints; an index on every foreign key; `numeric` for money; parameterised queries only; schema changes only through reviewed migration files; row-level security enabled on every Supabase table.
+- **SQL database:** primary and foreign keys on every table; not-null, unique and check constraints; an index on every foreign key; `numeric` for money; parameterised queries only; schema and data changes only through reviewed, numbered SQL scripts in `db/`, never by editing the live database; row-level security enabled on every Supabase table.
 - **UI screen design:** designed in Figma before build; consistent spacing, type and colour; responsive from phone to desktop; WCAG AA contrast, keyboard access and labelled controls; clear loading, empty and error states.
 - **React:** function components and hooks; small single-purpose components; no state that can be derived; stable list keys; effects only for syncing with something outside React.
 - **Next.js:** App Router; Server Components by default and `"use client"` only where needed; server-only code kept out of the browser bundle; `loading`, `error` and `not-found` files for data routes; input validated on the server.
@@ -80,7 +82,8 @@ Follow current rules and best practices for the SQL database, UI screen design, 
 - **CI on every PR (GitHub Actions):** lint (ESLint), format check (Prettier), type-check, unit tests (Vitest), SonarQube Cloud scan, build, end-to-end tests (Playwright) against a PostgreSQL service loaded from `db/*.sql`.
 - **Coverage:** 100% statements, branches, functions and lines; the build fails below that.
 - **Static analysis:** SonarQube Cloud, organisation `manojshetty28`, project `manojshetty28_hospitalportalbyclaude`; token in the GitHub secret `SONAR_TOKEN`.
-- **Before opening a PR:** run all CI steps locally, test pages and APIs against a local sandbox database with the dummy data, and take browser screenshots.
+- **Before opening a PR:** run all CI steps locally with the same environment variables CI uses, test pages and APIs against a local sandbox database loaded from `db/*.sql`, and take browser screenshots.
+- **After opening a PR:** watch CI; fix a failure at its root cause and never skip or disable a test. Report CI results and Sonar data to the owner. The owner merges only when CI is green.
 - **Do not create or change anything in Vercel or Supabase** without the owner's explicit go-ahead.
 
 ## Working with the owner (lessons learned, 2026-11-18)
@@ -91,3 +94,5 @@ Follow current rules and best practices for the SQL database, UI screen design, 
 - Confirm table and object names with the owner; tables use the `_info_tbl` style.
 - Verify platform facts in current docs before recommending (for example Java is not a native Vercel runtime; Next.js 16 defaults to Cache Components).
 - Check a new tool's install conflicts and lint/format rules locally before pushing.
+- Unit tests must set every environment variable they depend on; a test that passes locally can fail in CI when the job sets extra variables.
+- Read the framework docs bundled with the installed version (`node_modules/next/dist/docs/`) before writing code; APIs change between major versions.
