@@ -73,3 +73,21 @@ Follow current rules and best practices for the SQL database, UI screen design, 
 - **UI screen design:** designed in Figma before build; consistent spacing, type and colour; responsive from phone to desktop; WCAG AA contrast, keyboard access and labelled controls; clear loading, empty and error states.
 - **React:** function components and hooks; small single-purpose components; no state that can be derived; stable list keys; effects only for syncing with something outside React.
 - **Next.js:** App Router; Server Components by default and `"use client"` only where needed; server-only code kept out of the browser bundle; `loading`, `error` and `not-found` files for data routes; input validated on the server.
+
+## CI and tooling (standing rule from the repo owner, 2026-11-18)
+
+- **Stack:** TypeScript, Next.js (App Router), React, Tailwind CSS, Drizzle ORM, npm.
+- **CI on every PR (GitHub Actions):** lint (ESLint), format check (Prettier), type-check, unit tests (Vitest), SonarQube Cloud scan, build, end-to-end tests (Playwright) against a PostgreSQL service loaded from `db/*.sql`.
+- **Coverage:** 100% statements, branches, functions and lines; the build fails below that.
+- **Static analysis:** SonarQube Cloud, organisation `manojshetty28`, project `manojshetty28_hospitalportalbyclaude`; token in the GitHub secret `SONAR_TOKEN`.
+- **Before opening a PR:** run all CI steps locally, test pages and APIs against a local sandbox database with the dummy data, and take browser screenshots.
+- **Do not create or change anything in Vercel or Supabase** without the owner's explicit go-ahead.
+
+## Working with the owner (lessons learned, 2026-11-18)
+
+- Keep documents short: only required content, rules, diagrams and best practices.
+- Build only the scope the owner states; do not invent features, and label any assumption.
+- Show designs before building; the owner prefers cool, muted colours over vibrant ones.
+- Confirm table and object names with the owner; tables use the `_info_tbl` style.
+- Verify platform facts in current docs before recommending (for example Java is not a native Vercel runtime; Next.js 16 defaults to Cache Components).
+- Check a new tool's install conflicts and lint/format rules locally before pushing.
