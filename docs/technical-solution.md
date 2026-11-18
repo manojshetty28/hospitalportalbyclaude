@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Status | Draft for owner review |
-| Version | 0.2 |
+| Version | 0.3 |
 | Date | 2026-11-18 |
 | Tracking issue | #1 |
 | Companion doc | [Business specification](business-spec.md) |
@@ -54,6 +54,7 @@ flowchart LR
 | End-to-end tests | Playwright | Checks both pages and the navigation in a real browser |
 | Code coverage | Vitest coverage with the V8 provider | Built in; text, HTML and LCOV reports |
 | Linting and formatting | ESLint (Next.js config) and Prettier | Standard for the ecosystem |
+| Static analysis | SonarQube Cloud | Hosted Sonar: bugs, code smells, security hotspots, duplication and a quality gate on each PR |
 | CI | GitHub Actions | Runs checks on every PR |
 | Hosting | Vercel Hobby plan | Owner's choice; free |
 | Database hosting | Supabase free tier | Owner's choice; free |
@@ -170,8 +171,18 @@ GitHub Actions runs on every PR, and all steps must pass before merge:
 2. ESLint and Prettier check
 3. Type-check with `tsc --noEmit`
 4. Unit, component and API tests with coverage thresholds
-5. `next build`
-6. Playwright end-to-end tests
+5. SonarQube Cloud scan and quality gate
+6. `next build`
+7. Playwright end-to-end tests
+
+### Static analysis with SonarQube Cloud
+
+- **What it checks:** bugs, code smells, security hotspots and duplicated code in the TypeScript source, plus test coverage.
+- **Coverage:** it reads the LCOV report that Vitest writes to `coverage/lcov.info`, so no second coverage tool is needed.
+- **Quality gate:** the default "Sonar way" gate on new code. A failing gate fails the PR check.
+- **Setup:** a SonarQube Cloud organisation and project linked to the GitHub repo, a `sonar-project.properties` file in the repo, and the official scan action in the CI workflow.
+- **Secret:** the scan token is stored as the GitHub Actions secret `SONAR_TOKEN`, never in the repo.
+- **Scope:** `src/` is analysed; tests, generated migrations and config files are excluded from coverage.
 
 ## 12. Best practices checklist
 
@@ -196,7 +207,7 @@ GitHub Actions runs on every PR, and all steps must pass before merge:
 - Secrets only in environment variables; `.env*` ignored by Git except `.env.example`.
 - Security headers set in `next.config`.
 - Synthetic data only; no personal data in logs.
-- Dependabot and `npm audit` in CI.
+- Dependabot and `npm audit` in CI; SonarQube Cloud security hotspots reviewed on each PR.
 
 **Naming and Git**
 - Naming conventions and Git flow as defined in `CLAUDE.md`.
@@ -205,7 +216,7 @@ GitHub Actions runs on every PR, and all steps must pass before merge:
 
 Each step is its own issue and PR, started only after the owner approves it.
 
-1. Project scaffold: Next.js app, tooling, CI.
+1. Project scaffold: Next.js app, tooling, CI and SonarQube Cloud.
 2. Supabase project, schema migration and seed data.
 3. Service layer and the two APIs.
 4. Home page.
@@ -220,3 +231,4 @@ Each step is its own issue and PR, started only after the owner approves it.
 | 2 | `inpatient_count` is a stored value and can differ from the number of rows in `inpatients_info_tbl` | Accept, as specified; the seed script keeps them equal |
 | 3 | No login, so anyone with the URL can see the pages | Acceptable only because all data is synthetic |
 | 4 | Vercel Hobby and Supabase free-tier terms change over time | Re-check both pricing pages at setup |
+| 5 | SonarQube Cloud is free for public repositories; free use for a private repository is not confirmed | Check its pricing page at setup. If it is not free for this repo, fall back to ESLint and strict TypeScript only |
