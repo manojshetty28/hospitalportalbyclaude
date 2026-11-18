@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Status | Draft for owner review |
-| Version | 0.4 |
+| Version | 0.5 |
 | Date | 2026-11-18 |
 | Tracking issue | #1 |
 
@@ -23,6 +23,7 @@ Wireframes are designed in Figma: [Hospital Portal Wireframes](https://www.figma
 
 | Component | Value shown | Source |
 |---|---|---|
+| Hospital logo | Static image, also shown in the top bar of both pages | `docs/design/hospital-logo.svg` (app asset, not from the database) |
 | Page heading | Hospital name | `hospital_info_tbl.hospital_name` |
 | Hospital name | Text | `hospital_info_tbl.hospital_name` |
 | Hospital address | Text | `hospital_info_tbl.address` |
@@ -107,6 +108,8 @@ erDiagram
     text disease_name
   }
 ```
+
+Key: PK = primary key, FK = foreign key, UK = unique key (no two rows can have the same value).
 
 One hospital has many in-patients. Each in-patient row points to its hospital through `hospital_id`.
 
