@@ -13,3 +13,8 @@
 
 - Do not start implementation work until the repo owner explicitly approves it.
 - Until then, only spec writing, docs and planning are in scope.
+
+## Keeping this file current (standing rule from the repo owner, 2026-11-18)
+
+- Whenever the repo owner states a rule or standing preference for this project, record it in this file.
+- Changes to this file follow the Git flow above: feature branch, then PR, merged by the repo owner.
