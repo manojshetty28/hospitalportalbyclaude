@@ -19,11 +19,17 @@
 - Whenever the repo owner states a rule or standing preference for this project, record it in this file.
 - Changes to this file follow the Git flow above: feature branch, then PR, merged by the repo owner.
 
+## Project purpose (standing rule from the repo owner, 2026-11-18)
+
+- This is a learning app only, not a system for real hospital use.
+- Use free plans only: Vercel Hobby and Supabase free tier.
+- Never use real patient data; all data is synthetic. (Claude's addition, pending owner confirmation.)
+
 ## Architecture (standing rule from the repo owner, 2026-11-18)
 
-- Frontend: React, in its own folder `frontend/`.
-- Backend: Java, in its own folder `backend/`.
+- One Next.js app covers both the React UI and the backend API. There is no separate Java or standalone backend.
+- The app lives at the repo root, with backend logic kept in its own folder inside the app. (Location is Claude's choice, pending owner confirmation.)
 - Database: Supabase, used as a SQL (Postgres) database.
-- Hosting: Vercel, with the React frontend and the Java backend as separate frontend and backend targets.
-- The backend connects to the Supabase database using four config values: username, password, DB URL and DB name.
-- Those config values are supplied as environment variables on the backend target and are never committed to the repo. (Claude's addition, pending owner confirmation.)
+- Hosting: one Vercel project.
+- Server-side code connects to the Supabase database using four config values: username, password, DB URL and DB name.
+- Those config values are supplied as environment variables and are never committed to the repo. (Claude's addition, pending owner confirmation.)
