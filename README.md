@@ -5,7 +5,7 @@ A learning app with two read-only pages (Home and In-patients), built as one Nex
 ## Run locally
 
 1. Create the tables and dummy data in a PostgreSQL database:
-   `psql -f db/001-create-tables.sql -f db/002-insert-dummy-data.sql`
+   `psql -f db/001-create-tables.sql -f db/002-insert-dummy-data.sql -f db/003-add-bed-count.sql`
 2. Copy `.env.example` to `.env.local` and fill in the database values.
 3. `npm install`, then `npm run dev` and open http://localhost:3000.
 

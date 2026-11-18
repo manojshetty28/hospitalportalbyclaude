@@ -28,6 +28,7 @@ Wireframes are designed in Figma: [Hospital Portal Wireframes](https://www.figma
 | Hospital name | Text | `hospital_info_tbl.hospital_name` |
 | Hospital address | Text | `hospital_info_tbl.address` |
 | Owner of hospital | Text | `hospital_info_tbl.owner_name` |
+| Num of Beds | Whole number | `hospital_info_tbl.bed_count` |
 | Number of in-patients | Whole number | `hospital_info_tbl.inpatient_count` |
 | Patients Info button | Opens page P2 | — |
 
@@ -75,7 +76,7 @@ Both APIs are read-only and return JSON.
 
 | Method and path | Used by | Returns |
 |---|---|---|
-| `GET /api/hospital` | P1 | `hospitalName`, `address`, `ownerName`, `inpatientCount` |
+| `GET /api/hospital` | P1 | `hospitalName`, `address`, `ownerName`, `inpatientCount`, `bedCount` |
 | `GET /api/inpatients` | P2 | List of `patientName`, `cardNumber`, `admissionDate`, `currentBillAmount`, `diseaseName` |
 
 ## 6. Database
@@ -97,6 +98,7 @@ erDiagram
     text address
     text owner_name
     integer inpatient_count
+    integer bed_count
   }
   inpatients_info_tbl {
     integer inpatient_id PK
@@ -122,6 +124,7 @@ One hospital has many in-patients. Each in-patient row points to its hospital th
 | address | text | Not null |
 | owner_name | text | Not null |
 | inpatient_count | integer | Not null, ≥ 0 |
+| bed_count | integer | Not null, ≥ 0 |
 
 ### `inpatients_info_tbl` — one row per in-patient
 
@@ -145,6 +148,7 @@ One hospital has many in-patients. Each in-patient row points to its hospital th
 | Unique card number | `uq_inpatients_info_tbl_card_number` |
 | Bill amount ≥ 0 | `ck_inpatients_info_tbl_current_bill_amount` |
 | In-patient count ≥ 0 | `ck_hospital_info_tbl_inpatient_count` |
+| Bed count ≥ 0 | `ck_hospital_info_tbl_bed_count` |
 | Index on the foreign key | `idx_inpatients_info_tbl_hospital_id` |
 
 Naming follows the project conventions in `CLAUDE.md`.

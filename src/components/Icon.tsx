@@ -20,6 +20,9 @@ const ICON_PATHS = {
       <circle cx="7" cy="10.5" r="1.5" />
     </>
   ),
+  beds: (
+    <path d="M2 19V5M2 15h20v4M22 15v-3a2 2 0 0 0-2-2H2M6 10V8a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2" />
+  ),
   arrowRight: <path d="M5 12h14M13 6l6 6-6 6" />,
   arrowLeft: <path d="M19 12H5M11 6l-6 6 6 6" />,
 };

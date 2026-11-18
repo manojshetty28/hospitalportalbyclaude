@@ -14,6 +14,8 @@ test.describe("Home page", () => {
     await expect(page.getByText("Dr. Anita Rao")).toBeVisible();
     await expect(page.getByText("Number of in-patients")).toBeVisible();
     await expect(page.getByText("6", { exact: true })).toBeVisible();
+    await expect(page.getByText("Num of Beds")).toBeVisible();
+    await expect(page.getByText("50", { exact: true })).toBeVisible();
     await expect(page).toHaveTitle("Hospital Portal");
   });
 });
@@ -68,6 +70,7 @@ test.describe("APIs", () => {
         address: "12 Lake View Road, Bengaluru 560001",
         ownerName: "Dr. Anita Rao",
         inpatientCount: 6,
+        bedCount: 50,
       },
     });
   });

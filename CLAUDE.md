@@ -96,3 +96,6 @@ Follow current rules and best practices for the SQL database, UI screen design, 
 - Check a new tool's install conflicts and lint/format rules locally before pushing.
 - Unit tests must set every environment variable they depend on; a test that passes locally can fail in CI when the job sets extra variables.
 - Read the framework docs bundled with the installed version (`node_modules/next/dist/docs/`) before writing code; APIs change between major versions.
+- A schema change is a new numbered script in `db/` (never an edit to an already-run script), and the same PR adds it to the CI database step and the README run command.
+- Add a new column as nullable, backfill it, then set `NOT NULL` and its check constraint, so the script also works on a table that already has rows.
+- The SonarQube Cloud scan needs `SONAR_TOKEN`, which is not available in the local environment; it runs in CI on the PR, so report its result from there.
