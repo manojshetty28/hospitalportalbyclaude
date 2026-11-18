@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Status | Draft for owner review |
-| Version | 0.2 |
+| Version | 0.3 |
 | Date | 2026-11-18 |
 | Tracking issue | #1 |
 
@@ -13,30 +13,21 @@ A learning app with two read-only pages. All values are static: they are loaded 
 
 ## 2. Pages
 
+Wireframes are designed in Figma: [Hospital Portal Wireframes](https://www.figma.com/design/uHopJPhT4lmqlg2IexKphp). PNG exports are kept in [`docs/design/`](design/).
+
 ### P1 — Home
 
 - **Route:** `/`
 
-```
-+----------------------------------------------+
-|              <Hospital Name>                 |
-|                                              |
-|  Hospital name         <value>               |
-|  Hospital address      <value>               |
-|  Owner of hospital     <value>               |
-|  Number of in-patients <value>               |
-|                                              |
-|              [ Patients Info ]               |
-+----------------------------------------------+
-```
+![P1 Home wireframe](design/p1-home.png)
 
 | Component | Value shown | Source |
 |---|---|---|
-| Page heading | Hospital name | `hospital_info.hospital_name` |
-| Hospital name | Text | `hospital_info.hospital_name` |
-| Hospital address | Text | `hospital_info.address` |
-| Owner of hospital | Text | `hospital_info.owner_name` |
-| Number of in-patients | Whole number | `hospital_info.inpatient_count` |
+| Page heading | Hospital name | `hospital_tbl.hospital_name` |
+| Hospital name | Text | `hospital_tbl.hospital_name` |
+| Hospital address | Text | `hospital_tbl.address` |
+| Owner of hospital | Text | `hospital_tbl.owner_name` |
+| Number of in-patients | Whole number | `hospital_tbl.inpatient_count` |
 | Patients Info button | Opens page P2 | — |
 
 **API:** `GET /api/hospital`
@@ -45,23 +36,15 @@ A learning app with two read-only pages. All values are static: they are loaded 
 
 - **Route:** `/patients`
 
-```
-+------------------------------------------------------------------+
-| In-patients                                       [ Back to Home ]|
-|                                                                  |
-| Patient name | Card number | Admission date | Bill amount | Disease |
-| <name>       | <card no>   | <date>         | <amount>    | <name>  |
-| <name>       | <card no>   | <date>         | <amount>    | <name>  |
-+------------------------------------------------------------------+
-```
+![P2 In-patients wireframe](design/p2-inpatients.png)
 
 | Component | Value shown | Source |
 |---|---|---|
-| Patient name | Text | `inpatients.patient_name` |
-| Patient card number | Unique text | `inpatients.card_number` |
-| Admission date | Date, `DD MMM YYYY` | `inpatients.admission_date` |
-| Current bill amount | Amount with 2 decimals | `inpatients.current_bill_amount` |
-| Disease name | Text | `inpatients.disease_name` |
+| Patient name | Text | `inpatients_tbl.patient_name` |
+| Patient card number | Unique text | `inpatients_tbl.card_number` |
+| Admission date | Date, `DD MMM YYYY` | `inpatients_tbl.admission_date` |
+| Current bill amount | Amount with 2 decimals | `inpatients_tbl.current_bill_amount` |
+| Disease name | Text | `inpatients_tbl.disease_name` |
 | Back to Home button | Opens page P1 | — |
 
 Rows are sorted by admission date, newest first. If there are no records the page shows "No in-patients found".
@@ -106,15 +89,17 @@ Both APIs are read-only and return JSON.
 
 ```mermaid
 erDiagram
-  hospital_info {
-    integer id PK
+  hospital_tbl ||--o{ inpatients_tbl : "has"
+  hospital_tbl {
+    integer hospital_id PK
     text hospital_name
     text address
     text owner_name
     integer inpatient_count
   }
-  inpatients {
-    integer id PK
+  inpatients_tbl {
+    integer inpatient_id PK
+    integer hospital_id FK
     text patient_name
     text card_number UK
     date admission_date
@@ -123,23 +108,24 @@ erDiagram
   }
 ```
 
-The two tables are independent; there is no relationship between them.
+One hospital has many in-patients. Each in-patient row points to its hospital through `hospital_id`.
 
-### `hospital_info` — one row
+### `hospital_tbl` — one row
 
 | Column | Data type | Constraints |
 |---|---|---|
-| id | integer | Primary key |
+| hospital_id | integer | Primary key |
 | hospital_name | text | Not null |
 | address | text | Not null |
 | owner_name | text | Not null |
 | inpatient_count | integer | Not null, ≥ 0 |
 
-### `inpatients` — one row per in-patient
+### `inpatients_tbl` — one row per in-patient
 
 | Column | Data type | Constraints |
 |---|---|---|
-| id | integer | Primary key, auto-generated |
+| inpatient_id | integer | Primary key, auto-generated |
+| hospital_id | integer | Not null, foreign key → `hospital_tbl.hospital_id` |
 | patient_name | text | Not null |
 | card_number | text | Not null, unique |
 | admission_date | date | Not null |
@@ -148,4 +134,4 @@ The two tables are independent; there is no relationship between them.
 
 ### Seed data
 
-A seed script inserts one `hospital_info` row and about ten synthetic `inpatients` rows. `inpatient_count` is set to the number of seeded in-patient rows.
+A seed script inserts one `hospital_tbl` row and six synthetic `inpatients_tbl` rows linked to it. `inpatient_count` is set to the number of seeded in-patient rows.
