@@ -248,6 +248,24 @@ Locally, Husky and lint-staged run the linter and formatter on staged files befo
 - Small PRs with a description of what changed and how it was verified.
 - Conventional, descriptive commit messages.
 
+## 13a. Naming conventions
+
+The full list is in `CLAUDE.md`. In short:
+
+| Object | Convention | Example |
+|---|---|---|
+| Database table | `snake_case` with `_tbl` suffix | `inpatients_info_tbl` |
+| Database column | `snake_case`; primary key `<entity>_id`; foreign key named as the key it references | `hospital_id` |
+| Database constraint or index | `pk_`, `fk_`, `uq_`, `ck_`, `idx_` prefix, then table, then column | `fk_inpatients_info_tbl_hospital_id` |
+| API path | Lowercase `kebab-case` nouns under `/api` | `/api/inpatients` |
+| JSON field | `camelCase` | `currentBillAmount` |
+| React component and its file | `PascalCase` | `InpatientsTable.tsx` |
+| Other source file and folder | `kebab-case` | `format-date.ts` |
+| Variable and function | `camelCase` | `getInpatients` |
+| Type and interface | `PascalCase` | `Inpatient` |
+| Constant and environment variable | `UPPER_SNAKE_CASE` | `DB_NAME` |
+| Test file | Source name plus `.test` | `format-date.test.ts` |
+
 ## 14. Suggested delivery order
 
 Each step is a separate issue and PR, started only after the owner approves it.

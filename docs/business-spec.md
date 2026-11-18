@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Status | Draft for owner review |
-| Version | 0.3 |
+| Version | 0.4 |
 | Date | 2026-11-18 |
 | Tracking issue | #1 |
 
@@ -131,6 +131,20 @@ One hospital has many in-patients. Each in-patient row points to its hospital th
 | admission_date | date | Not null |
 | current_bill_amount | numeric(10,2) | Not null, ≥ 0 |
 | disease_name | text | Not null |
+
+### Constraint names
+
+| Constraint | Name |
+|---|---|
+| Primary key, hospital | `pk_hospital_info_tbl` |
+| Primary key, in-patient | `pk_inpatients_info_tbl` |
+| Foreign key, in-patient → hospital | `fk_inpatients_info_tbl_hospital_id` |
+| Unique card number | `uq_inpatients_info_tbl_card_number` |
+| Bill amount ≥ 0 | `ck_inpatients_info_tbl_current_bill_amount` |
+| In-patient count ≥ 0 | `ck_hospital_info_tbl_inpatient_count` |
+| Index on the foreign key | `idx_inpatients_info_tbl_hospital_id` |
+
+Naming follows the project conventions in `CLAUDE.md`.
 
 ### Seed data
 
