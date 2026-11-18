@@ -33,3 +33,8 @@
 - Hosting: one Vercel project.
 - Server-side code connects to the Supabase database using four config values: username, password, DB URL and DB name.
 - Those config values are supplied as environment variables and are never committed to the repo. (Claude's addition, pending owner confirmation.)
+
+## UI designs (standing rule from the repo owner, 2026-11-18)
+
+- UI page designs are made in Figma, and a copy is always kept in this repo under `docs/design/`.
+- Figma files cannot be stored in Git directly, so the repo copy is a PNG export per page plus a link to the Figma file. Re-export whenever the design changes.
