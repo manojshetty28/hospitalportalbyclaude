@@ -180,7 +180,8 @@ GitHub Actions runs on every PR, and all steps must pass before merge:
 - **What it checks:** bugs, code smells, security hotspots and duplicated code in the TypeScript source, plus test coverage.
 - **Coverage:** it reads the LCOV report that Vitest writes to `coverage/lcov.info`, so no second coverage tool is needed.
 - **Quality gate:** the default "Sonar way" gate on new code. A failing gate fails the PR check.
-- **Setup:** a SonarQube Cloud organisation and project linked to the GitHub repo, a `sonar-project.properties` file in the repo, and the official scan action in the CI workflow.
+- **Project:** organisation key `manojshetty28`, project key `manojshetty28_hospitalportalbyclaude` (created, public).
+- **Setup:** the organisation and project above, a `sonar-project.properties` file in the repo, and the official scan action in the CI workflow.
 - **Secret:** the scan token is stored as the GitHub Actions secret `SONAR_TOKEN`, never in the repo.
 - **Scope:** `src/` is analysed; tests, generated migrations and config files are excluded from coverage.
 
@@ -231,4 +232,4 @@ Each step is its own issue and PR, started only after the owner approves it.
 | 2 | `inpatient_count` is a stored value and can differ from the number of rows in `inpatients_info_tbl` | Accept, as specified; the seed script keeps them equal |
 | 3 | No login, so anyone with the URL can see the pages | Acceptable only because all data is synthetic |
 | 4 | Vercel Hobby and Supabase free-tier terms change over time | Re-check both pricing pages at setup |
-| 5 | SonarQube Cloud is free for public repositories; free use for a private repository is not confirmed | Check its pricing page at setup. If it is not free for this repo, fall back to ESLint and strict TypeScript only |
+| 5 | SonarQube Cloud runs "Automatic Analysis" by default, which conflicts with scanning from CI | Turn it off in the project settings when the CI scan is added |
