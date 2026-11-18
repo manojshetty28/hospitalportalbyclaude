@@ -64,3 +64,12 @@ The owner requires standard, consistent naming for every object. The table names
 | Commit message | Short imperative summary line | `Add in-patients page` |
 
 Names are descriptive English words with no unexplained abbreviations.
+
+## Quality standards (standing rule from the repo owner, 2026-11-18)
+
+Follow current rules and best practices for the SQL database, UI screen design, React and Next.js. Check the official documentation for the installed versions rather than relying on older habits. The detailed checklists are in `docs/technical-solution.md`; the essentials are:
+
+- **SQL database:** primary and foreign keys on every table; not-null, unique and check constraints; an index on every foreign key; `numeric` for money; parameterised queries only; schema changes only through reviewed migration files; row-level security enabled on every Supabase table.
+- **UI screen design:** designed in Figma before build; consistent spacing, type and colour; responsive from phone to desktop; WCAG AA contrast, keyboard access and labelled controls; clear loading, empty and error states.
+- **React:** function components and hooks; small single-purpose components; no state that can be derived; stable list keys; effects only for syncing with something outside React.
+- **Next.js:** App Router; Server Components by default and `"use client"` only where needed; server-only code kept out of the browser bundle; `loading`, `error` and `not-found` files for data routes; input validated on the server.
