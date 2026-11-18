@@ -38,3 +38,29 @@
 
 - UI page designs are made in Figma, and a copy is always kept in this repo under `docs/design/`.
 - Figma files cannot be stored in Git directly, so the repo copy is a PNG export per page plus a link to the Figma file. Re-export whenever the design changes.
+
+## Naming conventions (standing rule from the repo owner, 2026-11-18)
+
+The owner requires standard, consistent naming for every object. The table names are the owner's; the rest are Claude's choices of common industry conventions, pending owner confirmation.
+
+| Object | Convention | Example |
+|---|---|---|
+| Database table | `snake_case` with `_tbl` suffix | `hospital_info_tbl`, `inpatients_info_tbl` |
+| Database column | `snake_case`; primary key `<entity>_id`; foreign key named as the key it references | `hospital_id` |
+| Database constraint or index | `pk_`, `fk_`, `uq_`, `ck_`, `idx_` prefix, then table, then column | `fk_inpatients_info_tbl_hospital_id` |
+| API path | Lowercase `kebab-case` nouns under `/api`; no verbs | `/api/inpatients` |
+| JSON field | `camelCase` | `currentBillAmount` |
+| Page route | Lowercase `kebab-case` | `/patients` |
+| React component and its file | `PascalCase` | `InpatientsTable.tsx` |
+| Other source file and folder | `kebab-case` | `format-date.ts` |
+| Variable and function | `camelCase`; functions start with a verb | `getInpatients` |
+| Boolean | `is`, `has` or `can` prefix | `isLoading` |
+| Type and interface | `PascalCase`, no `I` prefix | `Inpatient` |
+| Constant and environment variable | `UPPER_SNAKE_CASE` | `DB_NAME` |
+| Test file | Source name plus `.test` | `format-date.test.ts` |
+| Document and design file | `kebab-case` | `business-spec.md`, `p1-home.png` |
+| Figma frame | Page id and name | `P1 Home` |
+| Git branch | As in the Git flow section | `feature/1/business-and-technical-docs` |
+| Commit message | Short imperative summary line | `Add in-patients page` |
+
+Names are descriptive English words with no unexplained abbreviations.
