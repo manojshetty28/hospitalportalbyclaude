@@ -4,7 +4,7 @@
 
 - Never commit directly to `main`.
 - For every piece of work, create a new branch first:
-  - `feature/<short-name>` for new features, specs and docs
+  - `feature/<github_issue_id>/<short_description_of_github_issue>` for new features, specs and docs (for example `feature/12/patient-registration`)
   - `bugfix/<short-name>` for bug fixes
 - Push the branch and open a pull request against `main`.
 - Never merge a PR. The repo owner reviews and merges every PR themselves.
