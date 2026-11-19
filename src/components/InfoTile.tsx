@@ -30,6 +30,8 @@ type InfoTileProps = {
   tone: keyof typeof TONES;
   /** Show the value in a larger size, for a headline number. */
   emphasis: boolean;
+  /** Span the full width of a two-column grid. */
+  isWide: boolean;
 };
 
 export function InfoTile({
@@ -38,11 +40,14 @@ export function InfoTile({
   icon,
   tone,
   emphasis,
+  isWide,
 }: InfoTileProps) {
   const classes = TONES[tone];
 
   return (
-    <div className={`flex items-center gap-4 rounded-2xl p-5 ${classes.tile}`}>
+    <div
+      className={`flex items-center gap-4 rounded-2xl p-5 ${classes.tile} ${isWide ? "sm:col-span-2" : ""}`}
+    >
       <span
         className={`flex size-13 shrink-0 items-center justify-center rounded-xl text-white ${classes.chip}`}
       >

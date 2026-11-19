@@ -58,6 +58,7 @@ describe("InfoTile", () => {
         icon="user"
         tone="steel"
         emphasis={false}
+        isWide={false}
       />,
     );
 
@@ -73,15 +74,33 @@ describe("InfoTile", () => {
         icon="bed"
         tone="slate"
         emphasis
+        isWide={false}
       />,
     );
 
     expect(screen.getByText("6")).toHaveClass("text-3xl");
   });
+
+  it("spans both grid columns when wide", () => {
+    render(
+      <InfoTile
+        label="Num of Beds"
+        value="50"
+        icon="beds"
+        tone="teal"
+        emphasis
+        isWide
+      />,
+    );
+
+    expect(screen.getByText("50").closest(".rounded-2xl")).toHaveClass(
+      "sm:col-span-2",
+    );
+  });
 });
 
 describe("HospitalCard", () => {
-  it("shows the four hospital values and the Patients Info link", () => {
+  it("shows the five hospital values and the Patients Info link", () => {
     render(<HospitalCard hospital={sampleHospital} />);
 
     expect(
@@ -94,6 +113,8 @@ describe("HospitalCard", () => {
     expect(screen.getByText("Dr. Anita Rao")).toBeVisible();
     expect(screen.getByText("Number of in-patients")).toBeVisible();
     expect(screen.getByText("2")).toBeVisible();
+    expect(screen.getByText("Num of Beds")).toBeVisible();
+    expect(screen.getByText("50")).toBeVisible();
     expect(screen.getByRole("link", { name: "Patients Info" })).toHaveAttribute(
       "href",
       "/patients",

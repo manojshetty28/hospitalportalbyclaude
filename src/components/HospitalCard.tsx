@@ -26,6 +26,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
             icon="building"
             tone="navy"
             emphasis={false}
+            isWide
           />
           <InfoTile
             label="Hospital address"
@@ -33,6 +34,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
             icon="pin"
             tone="teal"
             emphasis={false}
+            isWide={false}
           />
           <InfoTile
             label="Owner of hospital"
@@ -40,6 +42,15 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
             icon="user"
             tone="steel"
             emphasis={false}
+            isWide={false}
+          />
+          <InfoTile
+            label="Num of Beds"
+            value={String(hospital.bedCount)}
+            icon="beds"
+            tone="teal"
+            emphasis
+            isWide={false}
           />
           <InfoTile
             label="Number of in-patients"
@@ -47,6 +58,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
             icon="bed"
             tone="slate"
             emphasis
+            isWide={false}
           />
         </dl>
 

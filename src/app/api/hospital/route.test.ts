@@ -25,6 +25,7 @@ describe("GET /api/hospital", () => {
         address: "12 Lake View Road, Bengaluru 560001",
         ownerName: "Dr. Anita Rao",
         inpatientCount: 2,
+        bedCount: 50,
       },
     });
   });

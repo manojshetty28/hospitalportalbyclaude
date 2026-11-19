@@ -19,6 +19,7 @@ export async function GET(): Promise<Response> {
         address: hospital.address,
         ownerName: hospital.ownerName,
         inpatientCount: hospital.inpatientCount,
+        bedCount: hospital.bedCount,
       },
     });
   } catch (error) {

@@ -9,6 +9,7 @@ export type HospitalInfo = {
   address: string;
   ownerName: string;
   inpatientCount: number;
+  bedCount: number;
 };
 
 export type Inpatient = {
@@ -29,6 +30,7 @@ export async function getHospitalInfo(): Promise<HospitalInfo | null> {
       address: hospitalInfoTbl.address,
       ownerName: hospitalInfoTbl.ownerName,
       inpatientCount: hospitalInfoTbl.inpatientCount,
+      bedCount: hospitalInfoTbl.bedCount,
     })
     .from(hospitalInfoTbl)
     .orderBy(asc(hospitalInfoTbl.hospitalId))

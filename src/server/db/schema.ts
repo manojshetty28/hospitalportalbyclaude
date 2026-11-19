@@ -1,6 +1,6 @@
 import { date, integer, numeric, pgTable, text } from "drizzle-orm/pg-core";
 
-// Column mapping for queries. Constraints and indexes are defined in db/001-create-tables.sql.
+// Column mapping for queries. Constraints and indexes are defined in the db/*.sql scripts.
 
 export const hospitalInfoTbl = pgTable("hospital_info_tbl", {
   hospitalId: integer("hospital_id").primaryKey(),
@@ -8,6 +8,7 @@ export const hospitalInfoTbl = pgTable("hospital_info_tbl", {
   address: text("address").notNull(),
   ownerName: text("owner_name").notNull(),
   inpatientCount: integer("inpatient_count").notNull(),
+  bedCount: integer("bed_count").notNull(),
 });
 
 export const inpatientsInfoTbl = pgTable("inpatients_info_tbl", {
