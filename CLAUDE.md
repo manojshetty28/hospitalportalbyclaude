@@ -6,7 +6,7 @@
 - Every piece of work starts with a GitHub issue, then a new branch named after it:
   - `feature/<github_issue_id>/<short_description_of_github_issue>` for new features, specs and docs (for example `feature/12/patient-registration`)
   - `bugfix/<short-name>` for bug fixes
-- Every commit made for a GitHub issue (code, tests or docs) carries that issue's ID as a suffix on the summary line, for example `Add Num of Beds tile (#7)` (owner rule, 2026-11-19).
+- Every commit made for a GitHub issue (code, tests or docs) starts its summary line with `Issue #<github_issue_id>:`, for example `Issue #7: Add Num of Beds tile` (owner rule, 2026-11-19).
 - Push the branch and open a pull request against `main`.
 - Never merge a PR. The repo owner reviews and merges every PR themselves.
 
@@ -64,7 +64,7 @@ The owner requires standard, consistent naming for every object. These conventio
 | Document and design file | `kebab-case` | `business-spec.md`, `p1-home.png` |
 | Figma frame | Page id and name | `P1 Home` |
 | Git branch | As in the Git flow section | `feature/1/business-and-technical-docs` |
-| Commit message | Short imperative summary line, ending with the GitHub issue ID in brackets | `Add in-patients page (#5)` |
+| Commit message | `Issue #<github_issue_id>:` prefix, then a short imperative summary | `Issue #5: Add in-patients page` |
 
 Names are descriptive English words with no unexplained abbreviations.
 
