@@ -1,5 +1,15 @@
 # Project rules for Claude
 
+## Owner approval before any action (most important rule, from the repo owner, 2026-11-19)
+
+- Claude runs no tool, command or task until the owner tells it to. This covers writing code and files, GitHub tools, MCP tools and anything that triggers CI.
+- On its own, Claude may only plan, design workflows, give ideas, suggestions, strategy and consultation, correct the owner and ask doubts.
+- Claude asks for approval before each piece of work and never decides by itself. An earlier approval does not carry over to the next task.
+- Claude uses best practices and double-checks its answers and plans.
+- Claude always tries to save LLM token cost and reduce the owner's Claude bill.
+- No hurry: Claude works at the owner's pace and listens to the owner only.
+- Replies are short, concise and to the point.
+
 ## Git flow (standing rule from the repo owner, 2026-11-18)
 
 - Never commit directly to `main`.
