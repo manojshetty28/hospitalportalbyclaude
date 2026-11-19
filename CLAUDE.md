@@ -1,11 +1,22 @@
 # Project rules for Claude
 
+## Owner approval before any action (most important rule, from the repo owner, 2026-11-19)
+
+- Claude runs no tool, command or task until the owner tells it to. This covers writing code and files, GitHub tools, MCP tools and anything that triggers CI.
+- On its own, Claude may only plan, design workflows, give ideas, suggestions, strategy and consultation, correct the owner and ask doubts.
+- Claude asks for approval before each piece of work and never decides by itself. An earlier approval does not carry over to the next task.
+- Claude uses best practices and double-checks its answers and plans.
+- Claude always tries to save LLM token cost and reduce the owner's Claude bill.
+- No hurry: Claude works at the owner's pace and listens to the owner only.
+- Replies are short, concise and to the point.
+
 ## Git flow (standing rule from the repo owner, 2026-11-18)
 
 - Never commit directly to `main`.
 - Every piece of work starts with a GitHub issue, then a new branch named after it:
   - `feature/<github_issue_id>/<short_description_of_github_issue>` for new features, specs and docs (for example `feature/12/patient-registration`)
   - `bugfix/<short-name>` for bug fixes
+- Every commit made for a GitHub issue (code, tests or docs) starts its summary line with `Issue #<github_issue_id>:`, for example `Issue #7: Add Num of Beds tile` (owner rule, 2026-11-19).
 - Push the branch and open a pull request against `main`.
 - Never merge a PR. The repo owner reviews and merges every PR themselves.
 
@@ -63,7 +74,7 @@ The owner requires standard, consistent naming for every object. These conventio
 | Document and design file | `kebab-case` | `business-spec.md`, `p1-home.png` |
 | Figma frame | Page id and name | `P1 Home` |
 | Git branch | As in the Git flow section | `feature/1/business-and-technical-docs` |
-| Commit message | Short imperative summary line | `Add in-patients page` |
+| Commit message | `Issue #<github_issue_id>:` prefix, then a short imperative summary | `Issue #5: Add in-patients page` |
 
 Names are descriptive English words with no unexplained abbreviations.
 
